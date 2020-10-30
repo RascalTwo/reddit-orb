@@ -1,0 +1,18 @@
+description: Obtain auth information
+
+parameters:
+  credentialspath:
+    type: string
+    description: The path of the auth file to download and overwrite
+steps:
+  - dropbox-orb/download:
+      downloadpath: <<parameters.credentialspath>>
+      filepath: ./auth.txt
+  - run:
+      command: <<include(scripts/verboseCurl.sh)>>
+  - run:
+      command: <<include(scripts/obtain-auth.sh)>>
+  - dropbox-orb/upload:
+      mode: overwrite
+      uploadpath: <<parameters.credentialspath>>
+      filepath: ./auth.txt

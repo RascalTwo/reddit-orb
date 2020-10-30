@@ -1,0 +1,70 @@
+description: Obtain auth information
+
+parameters:
+  kind:
+    type: enum
+    enum: ["link", "self", "image", "video", "videogif"]
+    description: Type of submission
+  title:
+    type: string
+    description: Title of submission
+  subreddit:
+    type: string
+    description: Subreddit to submit to
+  text:
+    type: string
+    default: ""
+    description: Text of submission
+  flair_id:
+    type: string
+    default: ""
+    description: ID of flair for submission
+  flair_text:
+    type: string
+    default: ""
+    description: Text of flair
+  nsfw:
+    type: boolean
+    default: false
+    description: If the submission is NSFW
+  spoiler:
+    type: boolean
+    default: false
+    description: If the submission is a spoiler
+  resubmit:
+    type: boolean
+    default: false
+    description: If to resubmit URL if URL has already been submitted to subreddit
+  sendreplies:
+    type: boolean
+    default: false
+    description: Enable inbox replies for this submission
+  url:
+    type: string
+    default: ""
+    description: URL of submission
+  video_poster_url:
+    type: string
+    default: ""
+    description: URL of video poster
+
+steps:
+  - run:
+      when: always
+      command: <<include(scripts/verboseCurl.sh)>>
+  - run:
+      when: always
+      environment:
+        KIND: <<parameters.kind>>
+        TITLE: <<parameters.title>>
+        SUBREDDIT: <<parameters.subreddit>>
+        TEXT: <<parameters.text>>
+        FLAIR_ID: <<parameters.flair_id>>
+        FLAIR_TEXT: <<parameters.flair_text>>
+        NSFW: <<parameters.nsfw>>
+        SPOILER: <<parameters.spoiler>>
+        RESUBMIT: <<parameters.resubmit>>
+        SENDREPLIES: <<parameters.sendreplies>>
+        URL: <<parameters.url>>
+        VIDEO_POSTER_URL: <<parameters.video_poster_url>>
+      command: <<include(scripts/submit.sh)>>
