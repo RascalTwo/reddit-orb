@@ -1,0 +1,25 @@
+description: Submit self post to subreddit
+
+usage:
+  version: 2.1
+  orbs:
+    reddit-orb: rascaltwo/reddit-orb@1
+  jobs:
+    submit-the-post:
+      executor: reddit-orb/default
+      steps:
+        - reddit-orb/obtain-auth:
+            credentialspath: /mysecrets.txt
+        - reddit-orb/submit:
+            kind: self
+            title: Title of Post
+            text: |
+              First line
+              Second line
+
+              > Valid markdown
+            subreddit: /r/Rascal_Two
+  workflows:
+    submit-the-post:
+      jobs:
+        - submit-the-post
