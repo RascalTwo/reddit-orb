@@ -1,4 +1,4 @@
-ObtainAuth() {
+GetAccessToken() {
     verboseCurl false --header "User-Agent: ${REDDIT_USER_AGENT}" --user "${CLIENT_ID}:${CLIENT_SECRET}" --request POST "https://www.reddit.com/api/v1/access_token" --data "grant_type=refresh_token&refresh_token=${REFRESH_TOKEN}";
     error=$(jq .error < output);
     if [[ "${error}" = "null" ]]; then
@@ -14,5 +14,5 @@ ObtainAuth() {
 # View src/tests for more information.
 ORB_TEST_ENV="bats-core"
 if [ "${0#*$ORB_TEST_ENV}" == "$0" ]; then
-    ObtainAuth
+    GetAccessToken
 fi

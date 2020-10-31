@@ -1,7 +1,0 @@
-description: Obtain auth information
-
-steps:
-  - run:
-      command: <<include(scripts/verboseCurl.sh)>>
-  - run:
-      command: <<include(scripts/obtain-auth.sh)>>

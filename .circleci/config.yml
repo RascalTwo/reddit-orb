@@ -28,13 +28,6 @@ jobs:
     executor: reddit-orb/default
     steps:
       - checkout
-      - reddit-orb/obtain-auth
-      - reddit-orb/submit:
-          kind: link
-          resubmit: true
-          title: CircleCI reddit-orb Repo
-          url: https://github.com/rascaltwo/reddit-orb
-          subreddit: /r/Rascal_Two
 
 workflows:
   # Prior to producing a development orb (which requires credentials) basic validation, linting, and even unit testing can be performed.

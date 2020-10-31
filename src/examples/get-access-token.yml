@@ -1,0 +1,15 @@
+description: Get the access token, storing it in `./access_token.txt`
+
+usage:
+  version: 2.1
+  orbs:
+    reddit-orb: rascaltwo/reddit-orb@1
+  jobs:
+    get-access-token:
+      executor: reddit-orb/default
+      steps:
+        - reddit-orb/get-access-token
+  workflows:
+    get-access-token:
+      jobs:
+        - get-access-token
