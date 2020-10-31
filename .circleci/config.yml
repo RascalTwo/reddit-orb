@@ -28,8 +28,7 @@ jobs:
     executor: reddit-orb/default
     steps:
       - checkout
-      - reddit-orb/obtain-auth:
-          credentialspath: /mysecrets.txt
+      - reddit-orb/obtain-auth
       - reddit-orb/submit:
           kind: link
           resubmit: true
@@ -85,7 +84,6 @@ workflows:
       - integration-test-1:
           context:
             - reddit-context
-            - dropbox-context
       # Publish a semver version of the orb. relies on
       # the commit subject containing the text "[semver:patch|minor|major|skip]"
       # as that will determine whether a patch, minor or major

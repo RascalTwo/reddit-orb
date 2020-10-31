@@ -4,13 +4,7 @@
 
 Allows interaction with the [Reddit API](https://www.reddit.com/dev/api/).
 
-> Depends on [`dropbox-orb`](https://circleci.com/developer/orbs/orb/rascaltwo/dropbox-orb) to store OAuth authentication information.
-
 There are a number of required enviroment variables:
-
-- `DROPBOX_TOKEN`
-  - Token for dropbox authentication
-  - This is required for `dropbox-orb`
 
 - `REDDIT_USER_AGENT`
   - The user agent to make requests to the Reddit API with
@@ -18,14 +12,18 @@ There are a number of required enviroment variables:
   - ID of a Reddit personnal use script
 - `CLIENT_SECRET`
   - Secret of the same Reddit personnal use script
+- `REFRESH_TOKEN`
+  - Refresh token required to obtain new access tokens for your personnal use script
 
 ***
 
-Additionally, you must obtain minimum an access and refresh token for your script.
+## Obtaining Refresh Token
 
-This can be done by using [`reddit-oauth-helper`](https://github.com/not-an-aardvark/reddit-oauth-helper).
+The `REFRESH_TOKEN` is the only piece of information that requires a number of steps to obtain - you can see the entire [Reddit OAuth2 Flow](https://github.com/reddit-archive/reddit/wiki/OAuth2) if you wish.
 
-After using it, you will be presented with JSON object like this:
+### Automated
+
+If you don't wish to perform these steps manually, you can use [`reddit-oauth-helper`](https://github.com/not-an-aardvark/reddit-oauth-helper), which automates many of the steps for you - leaving you with a JSON response:
 
 ```json
 {
@@ -37,17 +35,41 @@ After using it, you will be presented with JSON object like this:
 }
 ```
 
-You must take this, and create a file like this:
+in which `refresh-token-string` would be what you would set as your `REFRESH_TOKEN`.
 
-```text
-access-token-string refresh-token-string 0 0
-```
+### Manually
 
-then take this file and upload it to your dropbox, at a location accessible to `dropbox-orb`.
+Visit this URL:
+
+> https://www.reddit.com/api/v1/authorize?client_id=CLIENT_ID&response_type=code&redirect_uri=URI&duration=permanent&scope=SCOPE_STRING
+
+replacing `CLIENT_ID` and `REDIRECT_URI` with the listed values in your personal script settings, and `SCOPE_STRING` with a space-seperated list of scopes to grant.
+
+You will then be redirected to your `REDIRECT_URI` with `code=one-time-oauth-code` in the URL, now you need to save the value of `code` - `one-time-oauth-code` in this example.
 
 ***
 
-With this file in your Dropbox, and you running the `reddit-orb/obtain-auth` with a `credentialspath` of this filepath, you are now ready to run the other commands.
+Next is to make a HTTP Basic authenticated POST request to this URL:
+
+> https://www.reddit.com/api/v1/access_token
+
+with the data being
+
+> grant_type=authorization_code&code=one-time-oauth-code&redirect_uri=REDIRECT_URI
+
+replacing `one-time-oauth-code` with the real value, and `REDIRECT_URI` with the same Redirect URI from before.
+
+If you've been successful, you'll be presented with the same JSON object had you used the automated tool:
+
+```json
+{
+  "access_token": "access-token-string",
+  "token_type": "bearer",
+  "expires_in": 3600,
+  "refresh_token": "refresh-token-string",
+  "scope": "string"
+}
+```
 
 ## Resources
 

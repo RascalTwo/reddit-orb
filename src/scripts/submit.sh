@@ -1,12 +1,5 @@
 Submit() {
-    if [ -f "auth.txt" ]; then
-        echo "Parsing Auth Info...";
-        read -r -a auth_info <<< "$(cat auth.txt)";
-    else
-        echo "Auth Info not found";
-        return 1;
-    fi
-    access_token="${auth_info[1]}";
+    access_token=$(cat access_token.txt);
 
     # Optional string values
     [[ -n "${TEXT}" ]] && TEXT="&text=${TEXT}" || TEXT="";

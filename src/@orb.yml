@@ -2,9 +2,6 @@ version: 2.1
 
 description: Interact with the Reddit API
 
-orbs:
-  dropbox-orb: rascaltwo/dropbox-orb@2
-
 display:
   home_url: "https://github.com/rascaltwo/reddit-orb"
   source_url: "https://github.com/rascaltwo/reddit-orb"

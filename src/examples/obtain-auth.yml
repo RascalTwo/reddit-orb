@@ -8,8 +8,7 @@ usage:
     obtain-the-auth:
       executor: reddit-orb/default
       steps:
-        - reddit-orb/obtain-auth:
-            credentialspath: /mysecrets.txt
+        - reddit-orb/obtain-auth
   workflows:
     obtain-the-auth:
       jobs:
