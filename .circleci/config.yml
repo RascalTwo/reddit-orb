@@ -35,6 +35,9 @@ jobs:
           title: CircleCI reddit-orb Repo
           url: https://github.com/rascaltwo/reddit-orb
           subreddit: /r/Rascal_Two
+      - reddit-orb/editusertext:
+          thing_id: t3_jljusa
+          text: Updated text from <<pipeline.id>>
 
 workflows:
   # Prior to producing a development orb (which requires credentials) basic validation, linting, and even unit testing can be performed.

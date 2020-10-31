@@ -1,0 +1,18 @@
+description: Edit text of post
+
+usage:
+  version: 2.1
+  orbs:
+    reddit-orb: rascaltwo/reddit-orb@1
+  jobs:
+    edit-your-text:
+      executor: reddit-orb/default
+      steps:
+        - reddit-orb/get-access-token
+        - reddit-orb/editusertext:
+            thing_id: t3_jljusa
+            text: Updated Text
+  workflows:
+    edit-your-text:
+      jobs:
+        - edit-your-text
