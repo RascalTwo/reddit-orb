@@ -1,0 +1,24 @@
+description: Edit the text of a self post or comment
+
+parameters:
+  thing_id:
+    type: string
+    description: ID of thing to edit
+  text:
+    type: string
+    description: Body text to update with
+  return_rtjson:
+    type: boolean
+    default: false
+
+steps:
+  - run:
+      when: always
+      command: <<include(scripts/verboseCurl.sh)>>
+  - run:
+      when: always
+      environment:
+        TEXT: <<parameters.text>>
+        THING_ID: <<parameters.thing_id>>
+        RETURN_RTJSON: <<parameters.return_rtjson>>
+      command: <<include(scripts/editusertext.sh)>>
