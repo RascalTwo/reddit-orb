@@ -28,14 +28,6 @@ jobs:
     executor: reddit-orb/default
     steps:
       - checkout
-      - reddit-orb/obtain-auth:
-          credentialspath: /mysecrets.txt
-      - reddit-orb/submit:
-          kind: link
-          resubmit: true
-          title: CircleCI reddit-orb Repo
-          url: https://github.com/rascaltwo/reddit-orb
-          subreddit: /r/Rascal_Two
 
 workflows:
   # Prior to producing a development orb (which requires credentials) basic validation, linting, and even unit testing can be performed.
@@ -85,7 +77,6 @@ workflows:
       - integration-test-1:
           context:
             - reddit-context
-            - dropbox-context
       # Publish a semver version of the orb. relies on
       # the commit subject containing the text "[semver:patch|minor|major|skip]"
       # as that will determine whether a patch, minor or major

@@ -8,8 +8,7 @@ usage:
     submit-the-post:
       executor: reddit-orb/default
       steps:
-        - reddit-orb/obtain-auth:
-            credentialspath: /mysecrets.txt
+        - reddit-orb/get-access-token
         - reddit-orb/submit:
             kind: self
             title: Title of Post

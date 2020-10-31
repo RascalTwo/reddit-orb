@@ -1,0 +1,7 @@
+description: Get the access token, storing it in `./access_token.txt`
+
+steps:
+  - run:
+      command: <<include(scripts/verboseCurl.sh)>>
+  - run:
+      command: <<include(scripts/get-access-token.sh)>>
